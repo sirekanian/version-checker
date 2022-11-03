@@ -7,14 +7,14 @@ group = "com.sirekanyan"
 version = "0.0.4"
 
 repositories {
+    mavenCentral()
     google()
-    jcenter()
 }
 
 dependencies {
     implementation("com.android.tools.build:gradle:4.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
-    implementation("io.ktor:ktor-client-cio:1.3.2")
+    implementation("io.ktor:ktor-client-cio:1.4.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.3")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.11.3")
 }
