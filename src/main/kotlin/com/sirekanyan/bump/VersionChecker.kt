@@ -47,16 +47,16 @@ class VersionChecker(
     private fun CoroutineScope.downloadMetadataAsync(key: ArtifactKey): Deferred<String?> =
         async(Dispatchers.IO) {
             try {
-                val url = Url(key.url)
-                if (url.protocol.name == "file") {
-                    val file = File(url.fullPath)
+                if (key.url.startsWith("file:/")) {
+                    val path = key.url.replace(Regex("^file:/+"), "/")
+                    val file = File(path)
                     if (file.exists()) {
                         file.readText()
                     } else {
                         null
                     }
                 } else {
-                    httpClient.get<String>(url)
+                    httpClient.get<String>(key.url)
                 }
             } catch (exception: ClientRequestException) {
                 if (exception.response.status.value == 404) {
