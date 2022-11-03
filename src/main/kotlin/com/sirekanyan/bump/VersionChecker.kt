@@ -9,8 +9,9 @@ import com.sirekanyan.bump.model.Metadata
 import com.sirekanyan.bump.model.Version
 import com.sirekanyan.bump.model.createArtifactKey
 import io.ktor.client.*
-import io.ktor.client.features.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.coroutines.*
 import org.gradle.api.artifacts.Dependency
@@ -46,23 +47,20 @@ class VersionChecker(
 
     private fun CoroutineScope.downloadMetadataAsync(key: ArtifactKey): Deferred<String?> =
         async(Dispatchers.IO) {
-            try {
-                if (key.url.startsWith("file:/")) {
-                    val path = key.url.replace(Regex("^file:/+"), "/")
-                    val file = File(path)
-                    if (file.exists()) {
-                        file.readText()
-                    } else {
-                        null
-                    }
+            if (key.url.startsWith("file:/")) {
+                val path = key.url.replace(Regex("^file:/+"), "/")
+                val file = File(path)
+                if (file.exists()) {
+                    file.readText()
                 } else {
-                    httpClient.get<String>(key.url)
+                    null
                 }
-            } catch (exception: ClientRequestException) {
-                if (exception.response.status.value == 404) {
+            } else {
+                val response = httpClient.get(key.url)
+                if (response.status == HttpStatusCode.NotFound) {
                     null
                 } else {
-                    throw exception
+                    response.bodyAsText()
                 }
             }
         }

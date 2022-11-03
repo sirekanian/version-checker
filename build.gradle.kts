@@ -12,11 +12,11 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:4.0.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
-    implementation("io.ktor:ktor-client-cio:1.4.3")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.3")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.11.3")
+    implementation("com.android.tools.build:gradle:4.0.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("io.ktor:ktor-client-cio:2.1.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4")
 }
 
 gradlePlugin {
