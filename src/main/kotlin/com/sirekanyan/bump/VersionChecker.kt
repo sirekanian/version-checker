@@ -68,7 +68,7 @@ class VersionChecker(
         }
 
     fun getMaxVersion(dependency: Dependency): Version =
-        repositories.flatMap { getVersions(it, dependency) }.max() ?: Version.ZERO
+        repositories.flatMap { getVersions(it, dependency) }.maxOrNull() ?: Version.ZERO
 
     private fun getVersions(
         repository: MavenArtifactRepository,

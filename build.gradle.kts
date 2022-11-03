@@ -28,10 +28,6 @@ gradlePlugin {
     }
 }
 
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}
-
 publishing {
     repositories {
         mavenLocal()
@@ -41,4 +37,12 @@ publishing {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks {
+    compileKotlin {
+        kotlinOptions {
+            allWarningsAsErrors = true
+        }
+    }
 }
