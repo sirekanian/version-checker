@@ -8,11 +8,9 @@ version = "0.0.4"
 
 repositories {
     mavenCentral()
-    google()
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:4.0.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("io.ktor:ktor-client-cio:2.1.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
