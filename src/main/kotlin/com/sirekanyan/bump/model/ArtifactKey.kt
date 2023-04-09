@@ -2,10 +2,12 @@ package com.sirekanyan.bump.model
 
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.repositories.ArtifactRepository
-import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import org.gradle.api.internal.artifacts.repositories.ResolutionAwareRepository
+import java.net.URI
 
 fun createArtifactKey(repository: ArtifactRepository, dependency: Dependency): ArtifactKey {
-    val repositoryUrl = (repository as MavenArtifactRepository).url.toASCIIString().removeSuffix("/")
+    val repositoryProperties = (repository as ResolutionAwareRepository).descriptor.properties
+    val repositoryUrl = (repositoryProperties["URL"] as URI).toASCIIString().removeSuffix("/")
     val groupPath = checkNotNull(dependency.group).replace('.', '/')
     val namePath = dependency.name.replace('.', '/')
     val url = "$repositoryUrl/$groupPath/$namePath/maven-metadata.xml"
