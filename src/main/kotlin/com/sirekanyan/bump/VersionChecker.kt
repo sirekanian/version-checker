@@ -2,6 +2,7 @@
 
 package com.sirekanyan.bump
 
+import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.sirekanyan.bump.model.ArtifactKey
@@ -25,7 +26,7 @@ class VersionChecker(
 ) {
 
     private val httpClient = HttpClient()
-    private val xmlMapper = XmlMapper().registerKotlinModule()
+    private val xmlMapper = XmlMapper().configure(FAIL_ON_UNKNOWN_PROPERTIES, false).registerKotlinModule()
     private val artifactKeys: Set<ArtifactKey>
     private lateinit var metadataCache: Map<ArtifactKey, String?>
 
