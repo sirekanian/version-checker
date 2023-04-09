@@ -5,6 +5,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.SelfResolvingDependency
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.kotlin.dsl.create
 
@@ -52,6 +53,6 @@ class BumpPlugin : Plugin<Project> {
     }
 
     private fun ConfigurationContainer.getDependencies(name: String): List<Dependency> =
-        getByName(name).allDependencies.toList()
+        getByName(name).allDependencies.filterNot { it is SelfResolvingDependency }
 
 }
