@@ -13,9 +13,9 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    implementation("io.ktor:ktor-client-cio:2.1.3")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4")
+    implementation("io.ktor:ktor-client-cio:2.2.4")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.14.2")
 }
 
 gradlePlugin {
