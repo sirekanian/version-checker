@@ -1,5 +1,6 @@
 package com.sirekanyan.bump
 
+import com.sirekanyan.bump.extensions.getSettingsRepositories
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
@@ -22,7 +23,7 @@ class BumpPlugin : Plugin<Project> {
                 )
                 project.allprojects.forEach { p ->
                     bump(
-                        p.repositories,
+                        p.repositories.ifEmpty { project.rootProject.getSettingsRepositories() },
                         p.configurations,
                         "implementation"
                     )
