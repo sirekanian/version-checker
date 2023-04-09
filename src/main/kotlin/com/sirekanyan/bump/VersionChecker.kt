@@ -15,12 +15,12 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.coroutines.*
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import org.gradle.api.artifacts.repositories.ArtifactRepository
 import java.io.File
 
 class VersionChecker(
     private val extension: BumpExtension,
-    private val repositories: List<MavenArtifactRepository>,
+    private val repositories: List<ArtifactRepository>,
     dependencies: List<Dependency>,
 ) {
 
@@ -69,7 +69,7 @@ class VersionChecker(
         repositories.flatMap { getVersions(it, dependency) }.maxOrNull() ?: Version.ZERO
 
     private fun getVersions(
-        repository: MavenArtifactRepository,
+        repository: ArtifactRepository,
         dependency: Dependency,
     ): List<Version> {
         val response = metadataCache.getValue(createArtifactKey(repository, dependency)) ?: return listOf()

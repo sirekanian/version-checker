@@ -5,7 +5,6 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.RepositoryHandler
-import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.kotlin.dsl.create
 
 class BumpPlugin : Plugin<Project> {
@@ -37,7 +36,7 @@ class BumpPlugin : Plugin<Project> {
         configurationContainer: ConfigurationContainer,
         configurationName: String,
     ) {
-        val repositories = repositoryHandler.getMavenRepositories()
+        val repositories = repositoryHandler.toList()
         val dependencies = configurationContainer.getDependencies(configurationName)
         val checker = VersionChecker(extension, repositories, dependencies)
         checker.fetchMetadata()
@@ -50,9 +49,6 @@ class BumpPlugin : Plugin<Project> {
             }
         }
     }
-
-    private fun RepositoryHandler.getMavenRepositories(): List<MavenArtifactRepository> =
-        map { (it as MavenArtifactRepository) }
 
     private fun ConfigurationContainer.getDependencies(name: String): List<Dependency> =
         getByName(name).allDependencies.toList()
