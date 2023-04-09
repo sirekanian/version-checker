@@ -35,7 +35,7 @@ class BumpPlugin : Plugin<Project> {
     private fun bump(
         repositoryHandler: RepositoryHandler,
         configurationContainer: ConfigurationContainer,
-        configurationName: String
+        configurationName: String,
     ) {
         val repositories = repositoryHandler.getMavenRepositories()
         val dependencies = configurationContainer.getDependencies(configurationName)

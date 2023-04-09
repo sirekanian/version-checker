@@ -4,7 +4,7 @@ data class Metadata(
     val groupId: String,
     val artifactId: String,
     val version: String?,
-    val versioning: Versioning
+    val versioning: Versioning,
 ) {
 
     fun getAvailableVersions(): List<Version> =
@@ -18,7 +18,7 @@ data class Metadata(
         val latest: String,
         val release: String?,
         val versions: List<String>,
-        val lastUpdated: String
+        val lastUpdated: String,
     )
 
 }

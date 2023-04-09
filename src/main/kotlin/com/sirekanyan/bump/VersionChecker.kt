@@ -21,7 +21,7 @@ import java.io.File
 class VersionChecker(
     private val extension: BumpExtension,
     private val repositories: List<MavenArtifactRepository>,
-    dependencies: List<Dependency>
+    dependencies: List<Dependency>,
 ) {
 
     private val httpClient = HttpClient()
@@ -70,7 +70,7 @@ class VersionChecker(
 
     private fun getVersions(
         repository: MavenArtifactRepository,
-        dependency: Dependency
+        dependency: Dependency,
     ): List<Version> {
         val response = metadataCache.getValue(createArtifactKey(repository, dependency)) ?: return listOf()
         val metadata = xmlMapper.readValue(response, Metadata::class.java)

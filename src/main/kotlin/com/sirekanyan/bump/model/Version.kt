@@ -22,7 +22,7 @@ data class Version(
     val major: Int,
     val minor: Int? = null,
     val patch: Int? = null,
-    val fix: Int? = null
+    val fix: Int? = null,
 ) : Comparable<Version> {
 
     private val comparator: Comparator<Version> =
