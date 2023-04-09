@@ -9,7 +9,7 @@ fun createArtifactKey(repository: ArtifactRepository, dependency: Dependency): A
     val repositoryProperties = (repository as ResolutionAwareRepository).descriptor.properties
     val repositoryUrl = (repositoryProperties["URL"] as URI).toASCIIString().removeSuffix("/")
     val groupPath = checkNotNull(dependency.group).replace('.', '/')
-    val namePath = dependency.name.replace('.', '/')
+    val namePath = dependency.name
     val url = "$repositoryUrl/$groupPath/$namePath/maven-metadata.xml"
     return ArtifactKey(url)
 }
