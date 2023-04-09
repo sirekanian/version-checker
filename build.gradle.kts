@@ -1,6 +1,7 @@
 plugins {
     `kotlin-dsl`
     `maven-publish`
+    id("bump-plugin") version "0.0.4"
 }
 
 group = "com.sirekanyan"
