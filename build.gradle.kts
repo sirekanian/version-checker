@@ -1,11 +1,12 @@
 plugins {
     `kotlin-dsl`
     `maven-publish`
-    id("bump-plugin") version "0.0.4"
+    id("bump-plugin")
 }
 
 group = "com.sirekanyan"
-version = "0.0.4"
+val appVersionName: String by properties
+version = appVersionName
 
 repositories {
     mavenCentral()
