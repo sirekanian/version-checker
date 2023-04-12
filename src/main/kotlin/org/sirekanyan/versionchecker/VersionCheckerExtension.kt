@@ -4,7 +4,7 @@ import org.gradle.api.artifacts.Dependency
 import org.sirekanyan.versionchecker.model.Version
 import org.sirekanyan.versionchecker.model.toVersion
 
-open class BumpExtension {
+open class VersionCheckerExtension {
 
     private val maxMap = mutableMapOf<String, Version>()
 

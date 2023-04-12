@@ -20,7 +20,7 @@ import org.sirekanyan.versionchecker.model.createArtifactKey
 import java.io.File
 
 class VersionChecker(
-    private val extension: BumpExtension,
+    private val extension: VersionCheckerExtension,
     private val repositories: List<ArtifactRepository>,
     dependencies: List<Dependency>,
 ) {

@@ -1,10 +1,10 @@
 plugins {
     `kotlin-dsl`
     `maven-publish`
-    id("bump-plugin")
+    id("org.sirekanyan.version-checker")
 }
 
-group = "com.sirekanyan"
+group = "org.sirekanyan"
 val appVersionName: String by properties
 version = appVersionName
 
@@ -22,8 +22,8 @@ dependencies {
 gradlePlugin {
     plugins {
         create("Check dependency versions") {
-            id = "bump-plugin"
-            implementationClass = "com.sirekanyan.bump.BumpPlugin"
+            id = "org.sirekanyan.version-checker"
+            implementationClass = "org.sirekanyan.versionchecker.VersionCheckerPlugin"
         }
     }
 }

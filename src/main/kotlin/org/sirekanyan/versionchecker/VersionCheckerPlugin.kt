@@ -9,21 +9,21 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.kotlin.dsl.create
 import org.sirekanyan.versionchecker.extensions.getSettingsRepositories
 
-class BumpPlugin : Plugin<Project> {
+class VersionCheckerPlugin : Plugin<Project> {
 
-    private lateinit var extension: BumpExtension
+    private lateinit var extension: VersionCheckerExtension
 
     override fun apply(project: Project) {
-        extension = project.extensions.create("bump")
-        project.task("bump") {
+        extension = project.extensions.create("versionCheckerOptions")
+        project.task("versionChecker") {
             doLast {
-                bump(
+                executeVersionChecker(
                     project.rootProject.buildscript.repositories,
                     project.rootProject.buildscript.configurations,
                     "classpath"
                 )
                 project.allprojects.forEach { p ->
-                    bump(
+                    executeVersionChecker(
                         p.repositories.ifEmpty { project.rootProject.getSettingsRepositories() },
                         p.configurations,
                         "implementation"
@@ -33,7 +33,7 @@ class BumpPlugin : Plugin<Project> {
         }
     }
 
-    private fun bump(
+    private fun executeVersionChecker(
         repositoryHandler: RepositoryHandler,
         configurationContainer: ConfigurationContainer,
         configurationName: String,
