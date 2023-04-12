@@ -1,6 +1,6 @@
 plugins {
     `kotlin-dsl`
-    `maven-publish`
+    id("com.gradle.plugin-publish") version "1.2.0"
     id("org.sirekanyan.version-checker")
 }
 
@@ -20,10 +20,18 @@ dependencies {
 }
 
 gradlePlugin {
+    @Suppress("UnstableApiUsage")
+    website.set("https://sirekanyan.org/projects/version-checker")
+    @Suppress("UnstableApiUsage")
+    vcsUrl.set("https://github.com/sirekanian/version-checker")
     plugins {
-        create("Check dependency versions") {
+        create("versionCheckerPlugin") {
             id = "org.sirekanyan.version-checker"
             implementationClass = "org.sirekanyan.versionchecker.VersionCheckerPlugin"
+            displayName = "Latest Version Checker"
+            description = "A Gradle plugin for checking the latest versions of dependencies"
+            @Suppress("UnstableApiUsage")
+            tags.set(listOf("latest", "version", "check", "checker", "versions", "dependency", "dependencies"))
         }
     }
 }
