@@ -1,4 +1,4 @@
-package com.sirekanyan.bump.model
+package org.sirekanyan.versionchecker.model
 
 fun String.toVersion(): Version? {
     fun Regex.groupValues() = matchEntire(this@toVersion)?.groupValues

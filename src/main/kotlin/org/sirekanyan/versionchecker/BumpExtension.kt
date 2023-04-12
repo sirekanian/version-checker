@@ -1,8 +1,8 @@
-package com.sirekanyan.bump
+package org.sirekanyan.versionchecker
 
-import com.sirekanyan.bump.model.Version
-import com.sirekanyan.bump.model.toVersion
 import org.gradle.api.artifacts.Dependency
+import org.sirekanyan.versionchecker.model.Version
+import org.sirekanyan.versionchecker.model.toVersion
 
 open class BumpExtension {
 

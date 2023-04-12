@@ -1,4 +1,4 @@
-package com.sirekanyan.bump.model
+package org.sirekanyan.versionchecker.model
 
 data class Metadata(
     val groupId: String,

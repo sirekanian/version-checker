@@ -1,4 +1,4 @@
-package com.sirekanyan.bump.extensions
+package org.sirekanyan.versionchecker.extensions
 
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.RepositoryHandler

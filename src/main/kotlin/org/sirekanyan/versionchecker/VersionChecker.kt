@@ -1,14 +1,10 @@
 @file:Suppress("DefaultLocale")
 
-package com.sirekanyan.bump
+package org.sirekanyan.versionchecker
 
 import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import com.sirekanyan.bump.model.ArtifactKey
-import com.sirekanyan.bump.model.Metadata
-import com.sirekanyan.bump.model.Version
-import com.sirekanyan.bump.model.createArtifactKey
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
@@ -17,6 +13,10 @@ import io.ktor.http.*
 import kotlinx.coroutines.*
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.repositories.ArtifactRepository
+import org.sirekanyan.versionchecker.model.ArtifactKey
+import org.sirekanyan.versionchecker.model.Metadata
+import org.sirekanyan.versionchecker.model.Version
+import org.sirekanyan.versionchecker.model.createArtifactKey
 import java.io.File
 
 class VersionChecker(

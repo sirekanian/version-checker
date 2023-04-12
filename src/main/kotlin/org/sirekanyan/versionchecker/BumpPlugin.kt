@@ -1,6 +1,5 @@
-package com.sirekanyan.bump
+package org.sirekanyan.versionchecker
 
-import com.sirekanyan.bump.extensions.getSettingsRepositories
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
@@ -8,6 +7,7 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.SelfResolvingDependency
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.kotlin.dsl.create
+import org.sirekanyan.versionchecker.extensions.getSettingsRepositories
 
 class BumpPlugin : Plugin<Project> {
 

@@ -1,4 +1,4 @@
-package com.sirekanyan.bump.model
+package org.sirekanyan.versionchecker.model
 
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.repositories.ArtifactRepository
