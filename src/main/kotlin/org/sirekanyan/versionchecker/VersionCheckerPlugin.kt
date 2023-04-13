@@ -46,7 +46,7 @@ class VersionCheckerPlugin : Plugin<Project> {
             val current = dependency.version
             val max = checker.getMaxVersion(dependency).toString()
             if (current != max) {
-                val gav = dependency.run { "$group:$name:$version" }
+                val gav = dependency.run { "$group:${name.removePrefix("$group.")}:$version" }
                 println("$gav => $max")
             }
         }
