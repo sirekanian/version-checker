@@ -8,6 +8,7 @@ import org.gradle.api.artifacts.SelfResolvingDependency
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.kotlin.dsl.create
 import org.sirekanyan.versionchecker.extensions.getSettingsRepositories
+import org.sirekanyan.versionchecker.gradlechecker.GradleVersionChecker
 
 class VersionCheckerPlugin : Plugin<Project> {
 
@@ -17,6 +18,7 @@ class VersionCheckerPlugin : Plugin<Project> {
         extension = project.extensions.create("versionCheckerOptions")
         project.task("versionChecker") {
             doLast {
+                executeGradleVersionChecker(project)
                 executeVersionChecker(
                     project.rootProject.buildscript.repositories,
                     project.rootProject.buildscript.configurations,
@@ -30,6 +32,15 @@ class VersionCheckerPlugin : Plugin<Project> {
                     )
                 }
             }
+        }
+    }
+
+    private fun executeGradleVersionChecker(project: Project) {
+        val checker = GradleVersionChecker()
+        val current = project.gradle.gradleVersion
+        val max = checker.getMaxVersion()
+        if (current != max) {
+            println("gradle $current => $max")
         }
     }
 
