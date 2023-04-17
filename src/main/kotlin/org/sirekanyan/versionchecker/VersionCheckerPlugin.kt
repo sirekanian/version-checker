@@ -7,8 +7,12 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.SelfResolvingDependency
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.kotlin.dsl.create
+import org.sirekanyan.versionchecker.composechecker.ComposeVersionChecker
+import org.sirekanyan.versionchecker.extensions.callMemberProperty
 import org.sirekanyan.versionchecker.extensions.getSettingsRepositories
 import org.sirekanyan.versionchecker.gradlechecker.GradleVersionChecker
+import org.sirekanyan.versionchecker.model.Version
+import org.sirekanyan.versionchecker.model.toVersion
 
 class VersionCheckerPlugin : Plugin<Project> {
 
@@ -18,7 +22,6 @@ class VersionCheckerPlugin : Plugin<Project> {
         extension = project.extensions.create("versionCheckerOptions")
         project.task("versionChecker") {
             doLast {
-                executeGradleVersionChecker(project)
                 executeVersionChecker(
                     project.rootProject.buildscript.repositories,
                     project.rootProject.buildscript.configurations,
@@ -31,6 +34,18 @@ class VersionCheckerPlugin : Plugin<Project> {
                         "implementation"
                     )
                 }
+                executeGradleVersionChecker(project)
+                project.extensions.findByName("android")
+                    ?.callMemberProperty("composeOptions")
+                    ?.callMemberProperty("kotlinCompilerExtensionVersion")
+                    ?.let { version: Any ->
+                        checkNotNull((version as? String)?.toVersion()) {
+                            "Cannot parse compose version: $version"
+                        }
+                    }
+                    ?.let { version: Version ->
+                        executeComposeVersionChecker(version)
+                    }
             }
         }
     }
@@ -41,6 +56,14 @@ class VersionCheckerPlugin : Plugin<Project> {
         val max = checker.getMaxVersion()
         if (current != max) {
             println("gradle $current => $max")
+        }
+    }
+
+    private fun executeComposeVersionChecker(current: Version) {
+        val checker = ComposeVersionChecker()
+        val max = checker.getMaxVersion()
+        if (current != max) {
+            println("compose $current => $max")
         }
     }
 
