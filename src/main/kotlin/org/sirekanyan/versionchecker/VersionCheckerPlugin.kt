@@ -28,11 +28,10 @@ class VersionCheckerPlugin : Plugin<Project> {
                     "classpath"
                 )
                 project.allprojects.forEach { p ->
-                    executeVersionChecker(
-                        p.repositories.ifEmpty { project.rootProject.getSettingsRepositories() },
-                        p.configurations,
-                        "implementation"
-                    )
+                    val repositories = p.repositories.ifEmpty { project.rootProject.getSettingsRepositories() }
+                    executeVersionChecker(repositories, p.configurations, "implementation")
+                    executeVersionChecker(repositories, p.configurations, "testImplementation")
+                    executeVersionChecker(repositories, p.configurations, "androidTestImplementation")
                 }
                 executeGradleVersionChecker(project)
                 project.extensions.findByName("android")
@@ -87,6 +86,6 @@ class VersionCheckerPlugin : Plugin<Project> {
     }
 
     private fun ConfigurationContainer.getDependencies(name: String): List<Dependency> =
-        getByName(name).allDependencies.filterNot { it is SelfResolvingDependency }
+        findByName(name)?.allDependencies?.filterNot { it is SelfResolvingDependency }.orEmpty()
 
 }
