@@ -52,9 +52,13 @@ class VersionCheckerPlugin : Plugin<Project> {
     private fun executeGradleVersionChecker(project: Project) {
         val checker = GradleVersionChecker()
         val current = project.gradle.gradleVersion
-        val max = checker.getMaxVersion()
+        val (max, sum) = checker.getMaxVersion()
         if (current != max) {
-            println("gradle $current => $max")
+            println(
+                "gradle wrapper $current => $max, use the following command to upgrade:\n"
+                    .plus("./gradlew wrapper --gradle-version $max --distribution-type bin")
+                    .plus(" --gradle-distribution-sha256-sum $sum")
+            )
         }
     }
 
@@ -62,7 +66,7 @@ class VersionCheckerPlugin : Plugin<Project> {
         val checker = ComposeVersionChecker()
         val max = checker.getMaxVersion()
         if (current != max) {
-            println("compose $current => $max")
+            println("jetpack compose compiler $current => $max")
         }
     }
 
