@@ -6,16 +6,29 @@ import org.sirekanyan.versionchecker.model.toVersion
 
 open class VersionCheckerExtension {
 
-    private val maxMap = mutableMapOf<String, Version>()
+    private val lessThanMap = mutableMapOf<String, Version>()
+    private val atMostMap = mutableMapOf<String, Version>()
 
-    fun findMax(dependency: Dependency): Version? {
+    fun findLessThanVersion(dependency: Dependency): Version? {
         val group = dependency.group
         val name = dependency.name
-        return maxMap["$group:$name"] ?: maxMap["$group"]
+        return lessThanMap["$group:$name"] ?: lessThanMap["$group"]
+    }
+
+    fun findAtMostVersion(dependency: Dependency): Version? {
+        val group = dependency.group
+        val name = dependency.name
+        return atMostMap["$group:$name"] ?: atMostMap["$group"]
     }
 
     infix fun String.lessThan(version: String) {
-        maxMap[this] = checkNotNull(version.toVersion()) {
+        lessThanMap[this] = checkNotNull(version.toVersion()) {
+            "Unsupported version format: $version"
+        }
+    }
+
+    infix fun String.atMost(version: String) {
+        atMostMap[this] = checkNotNull(version.toVersion()) {
             "Unsupported version format: $version"
         }
     }

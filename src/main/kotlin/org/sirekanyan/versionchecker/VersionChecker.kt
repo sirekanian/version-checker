@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PRO
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.ktor.client.*
-import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -76,9 +75,13 @@ class VersionChecker(
         val response = metadataCache.getValue(createArtifactKey(repository, dependency)) ?: return listOf()
         val metadata = xmlMapper.readValue(response, Metadata::class.java)
         return metadata.getAvailableVersions()
-            .filter { version ->
-                val max = extension.findMax(dependency)
-                max == null || version < max
+            .filter {
+                val lessThanVersion = extension.findLessThanVersion(dependency)
+                lessThanVersion == null || it < lessThanVersion
+            }
+            .filter {
+                val atMostVersion = extension.findAtMostVersion(dependency)
+                atMostVersion == null || it <= atMostVersion
             }
     }
 
