@@ -1,0 +1,14 @@
+on:
+  workflow_dispatch:
+  push:
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - shell: bash
+        run: ./gradlew publish
+      - shell: bash
+        run: ./apply-version-checker.sh
+      - shell: bash
+        run: ./gradlew versionChecker
