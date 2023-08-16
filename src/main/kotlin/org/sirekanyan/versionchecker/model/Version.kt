@@ -15,6 +15,9 @@ fun String.toVersion(): Version? {
     Regex("^(\\d+)\\.(\\d+)\\.(\\d+)-(\\d+)$").groupValues()?.run {
         return Version(getInt(1), getInt(2), getInt(3), getInt(4))
     }
+    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)-(\\d+)\\.(\\d+)\\.(\\d+)$").groupValues()?.run {
+        return Version(getInt(1), getInt(2), getInt(3), getInt(4), getInt(5), getInt(6))
+    }
     return null
 }
 
@@ -22,24 +25,29 @@ data class Version(
     val major: Int,
     val minor: Int? = null,
     val patch: Int? = null,
-    val fix: Int? = null,
+    val fix1: Int? = null,
+    val fix2: Int? = null,
+    val fix3: Int? = null,
 ) : Comparable<Version> {
 
     private val comparator: Comparator<Version> =
         compareBy<Version> { it.major }
             .thenBy { it.minor ?: 0 }
             .thenBy { it.patch ?: 0 }
-            .thenBy { it.fix ?: 0 }
+            .thenBy { it.fix1 ?: 0 }
+            .thenBy { it.fix2 ?: 0 }
+            .thenBy { it.fix3 ?: 0 }
 
     override fun compareTo(other: Version): Int =
         comparator.compare(this, other)
 
     override fun toString(): String =
         when {
-            fix == null && patch == null && minor == null -> "$major"
-            fix == null && patch == null -> "$major.$minor"
-            fix == null -> "$major.$minor.$patch"
-            else -> "$major.$minor.$patch-$fix"
+            fix3 == null && fix2 == null && fix1 == null && patch == null && minor == null -> "$major"
+            fix3 == null && fix2 == null && fix1 == null && patch == null -> "$major.$minor"
+            fix3 == null && fix2 == null && fix1 == null -> "$major.$minor.$patch"
+            fix3 == null && fix2 == null -> "$major.$minor.$patch-$fix1"
+            else -> "$major.$minor.$patch-$fix1.$fix2.$fix3"
         }
 
     companion object {
