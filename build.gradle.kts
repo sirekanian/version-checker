@@ -1,7 +1,7 @@
 plugins {
     `kotlin-dsl`
     kotlin("plugin.serialization") version embeddedKotlinVersion
-    id("com.gradle.plugin-publish") version "1.2.0"
+    id("com.gradle.plugin-publish") version "1.2.1"
     /// id("org.sirekanyan.version-checker")
 }
 
@@ -15,9 +15,9 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("io.ktor:ktor-client-cio:2.3.3")
-    implementation("io.ktor:ktor-client-content-negotiation:2.3.3")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.3")
+    implementation("io.ktor:ktor-client-cio:2.3.4")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.4")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.4")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2")
 }
@@ -25,8 +25,7 @@ dependencies {
 /// versionCheckerOptions {
 ///     "org.gradle.kotlin.kotlin-dsl" atMost org.gradle.kotlin.dsl.support.expectedKotlinDslPluginsVersion
 ///     "org.jetbrains.kotlin.plugin.serialization" atMost embeddedKotlinVersion
-///     "org.jetbrains.kotlin:kotlin-stdlib-jdk8" atMost embeddedKotlinVersion
-///     "org.jetbrains.kotlin:kotlin-reflect" atMost embeddedKotlinVersion
+///     "org.jetbrains.kotlin" atMost embeddedKotlinVersion
 /// }
 
 gradlePlugin {
