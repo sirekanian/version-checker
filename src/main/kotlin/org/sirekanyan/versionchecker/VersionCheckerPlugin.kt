@@ -25,15 +25,11 @@ class VersionCheckerPlugin : Plugin<Project> {
                 executeVersionChecker(
                     project.rootProject.buildscript.repositories,
                     project.rootProject.buildscript.configurations,
-                    "classpath",
                 )
                 project.allprojects.forEach { p ->
                     executeVersionChecker(
                         p.repositories.ifEmpty { project.rootProject.getSettingsRepositories() },
                         p.configurations,
-                        "implementation",
-                        "testImplementation",
-                        "androidTestImplementation",
                     )
                 }
                 executeGradleVersionChecker(project)
@@ -76,10 +72,9 @@ class VersionCheckerPlugin : Plugin<Project> {
     private fun executeVersionChecker(
         repositoryHandler: RepositoryHandler,
         configurationContainer: ConfigurationContainer,
-        vararg configurationNames: String,
     ) {
         val repositories = repositoryHandler.toList()
-        val dependencies = configurationNames.flatMap { configurationContainer.getDependencies(it) }.distinct()
+        val dependencies = configurationContainer.flatMap { configurationContainer.getDependencies(it.name) }.distinct()
         val checker = VersionChecker(extension, repositories, dependencies)
         checker.fetchMetadata()
         dependencies.forEach { dependency ->
