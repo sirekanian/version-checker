@@ -4,7 +4,7 @@ Using the [plugins DSL][1]:
 
 ```groovy
 plugins {
-    id "org.sirekanyan.version-checker" version "1.0.0"
+    id "org.sirekanyan.version-checker" version "1.0.10"
 }
 ```
 
@@ -18,7 +18,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.sirekanyan:version-checker:1.0.0"
+        classpath "org.sirekanyan:version-checker:1.0.10"
     }
 }
 
@@ -33,21 +33,25 @@ apply plugin: "org.sirekanyan.version-checker"
 
 ## Options
 
-If you don't want some dependency to be updated to the specific version, consider using `lessThan` inside
+If you don't want some dependency to be updated to the specific version, consider using `lessThan` or `atMost` inside
 a `versionCheckerOptions` block.
 
 For example:
 
 ```kotlin
 versionCheckerOptions {
-    "com.squareup.okhttp3:logging-interceptor" lessThan "4.0"
+    "com.squareup.okhttp3" lessThan "4.0"
+    "org.jetbrains.kotlin" atMost embeddedKotlinVersion
 }
 ```
 
 ## Usages
 
-This plugin is actively used during development of [Spacetime](https://github.com/sirekanian/spacetime),
-[Warmongr](https://github.com/sirekanian/warmongr), [Anders Robot](https://github.com/sirekanian/andersrobot),
+This plugin is actively used during development of
+[Outline Keeper](https://github.com/sirekanian/outline),
+[Spacetime](https://github.com/sirekanian/spacetime),
+[Warmongr](https://github.com/sirekanian/warmongr),
+[Anders Robot](https://github.com/sirekanian/andersrobot),
 and [Knigopis](https://github.com/sirekanian/knigopis)
 
 ## Links
