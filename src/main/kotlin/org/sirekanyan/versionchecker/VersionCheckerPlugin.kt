@@ -4,7 +4,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.SelfResolvingDependency
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.kotlin.dsl.create
 import org.sirekanyan.versionchecker.composechecker.ComposeVersionChecker
@@ -87,7 +86,8 @@ class VersionCheckerPlugin : Plugin<Project> {
         }
     }
 
+    @Suppress("Deprecation")
     private fun ConfigurationContainer.getDependencies(name: String): List<Dependency> =
-        findByName(name)?.allDependencies?.filterNot { it is SelfResolvingDependency }.orEmpty()
+        findByName(name)?.allDependencies?.filter { it !is org.gradle.api.artifacts.SelfResolvingDependency }.orEmpty()
 
 }
