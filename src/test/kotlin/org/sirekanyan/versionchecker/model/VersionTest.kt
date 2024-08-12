@@ -30,12 +30,12 @@ class VersionTest(private val input: String, private val output: Version?) {
                 arrayOf("0.0.0-0", Version.ZERO),
                 arrayOf("0.0.0-0.0", null),
                 arrayOf("0.0.0-0.0.0", Version.ZERO),
-                arrayOf("1", Version(1)),
-                arrayOf("1.2", Version(1, 2)),
-                arrayOf("1.2.3", Version(1, 2, 3)),
-                arrayOf("1.2.3-4", Version(1, 2, 3, 4)),
+                arrayOf("1", Version("", 1)),
+                arrayOf("1.2", Version("", 1, 2)),
+                arrayOf("1.2.3", Version("", 1, 2, 3)),
+                arrayOf("1.2.3-4", Version("", 1, 2, 3, 4)),
                 arrayOf("1.2.3-4.5", null),
-                arrayOf("1.2.3-4.5.6", Version(1, 2, 3, 4, 5, 6)),
+                arrayOf("1.2.3-4.5.6", Version("", 1, 2, 3, 4, 5, 6)),
             )
     }
 }

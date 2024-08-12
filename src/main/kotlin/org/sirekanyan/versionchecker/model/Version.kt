@@ -3,31 +3,32 @@ package org.sirekanyan.versionchecker.model
 fun String.toVersion(): Version? {
     fun Regex.groupValues() = matchEntire(this@toVersion)?.groupValues
     fun List<String>.getInt(index: Int) = this[index].toInt()
-    Regex("^(\\d+)$").groupValues()?.run {
-        return Version(getInt(1))
+    Regex("^(\\d+)$").groupValues()?.let {
+        return Version(this, it.getInt(1))
     }
-    Regex("^(\\d+)\\.(\\d+)$").groupValues()?.run {
-        return Version(getInt(1), getInt(2))
+    Regex("^(\\d+)\\.(\\d+)$").groupValues()?.let {
+        return Version(this, it.getInt(1), it.getInt(2))
     }
-    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)$").groupValues()?.run {
-        return Version(getInt(1), getInt(2), getInt(3))
+    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)$").groupValues()?.let {
+        return Version(this, it.getInt(1), it.getInt(2), it.getInt(3))
     }
-    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)-(\\d+)$").groupValues()?.run {
-        return Version(getInt(1), getInt(2), getInt(3), getInt(4))
+    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)-(\\d+)$").groupValues()?.let {
+        return Version(this, it.getInt(1), it.getInt(2), it.getInt(3), it.getInt(4))
     }
-    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)-(\\d+)\\.(\\d+)\\.(\\d+)$").groupValues()?.run {
-        return Version(getInt(1), getInt(2), getInt(3), getInt(4), getInt(5), getInt(6))
+    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)-(\\d+)\\.(\\d+)\\.(\\d+)$").groupValues()?.let {
+        return Version(this, it.getInt(1), it.getInt(2), it.getInt(3), it.getInt(4), it.getInt(5), it.getInt(6))
     }
     return null
 }
 
-data class Version(
-    val major: Int,
-    val minor: Int? = null,
-    val patch: Int? = null,
-    val fix1: Int? = null,
-    val fix2: Int? = null,
-    val fix3: Int? = null,
+class Version(
+    private val rawValue: String,
+    private val major: Int,
+    private val minor: Int? = null,
+    private val patch: Int? = null,
+    private val fix1: Int? = null,
+    private val fix2: Int? = null,
+    private val fix3: Int? = null,
 ) : Comparable<Version> {
 
     private val comparator: Comparator<Version> =
@@ -42,16 +43,10 @@ data class Version(
         comparator.compare(this, other)
 
     override fun toString(): String =
-        when {
-            fix3 == null && fix2 == null && fix1 == null && patch == null && minor == null -> "$major"
-            fix3 == null && fix2 == null && fix1 == null && patch == null -> "$major.$minor"
-            fix3 == null && fix2 == null && fix1 == null -> "$major.$minor.$patch"
-            fix3 == null && fix2 == null -> "$major.$minor.$patch-$fix1"
-            else -> "$major.$minor.$patch-$fix1.$fix2.$fix3"
-        }
+        rawValue
 
     companion object {
-        val ZERO = Version(0)
+        val ZERO = Version("0.0.0", 0)
     }
 
 }
