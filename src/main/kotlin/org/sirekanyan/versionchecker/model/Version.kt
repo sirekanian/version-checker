@@ -18,6 +18,12 @@ fun String.toVersion(): Version? {
     Regex("^(\\d+)\\.(\\d+)\\.(\\d+)-(\\d+)\\.(\\d+)\\.(\\d+)$").groupValues()?.let {
         return Version(this, it.getInt(1), it.getInt(2), it.getInt(3), it.getInt(4), it.getInt(5), it.getInt(6))
     }
+    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)[-.]([A-Za-z]+)-?(\\d+)?$").groupValues()?.let {
+        Phase.of(it[4])?.let { phase ->
+            val iteration = it[5].ifEmpty { "0" }.toInt()
+            return Version(this, it.getInt(1), it.getInt(2), it.getInt(3), phase = phase, iteration = iteration)
+        }
+    }
     return null
 }
 
@@ -29,6 +35,8 @@ class Version(
     private val fix1: Int? = null,
     private val fix2: Int? = null,
     private val fix3: Int? = null,
+    val phase: Phase = Phase.RELEASE,
+    private val iteration: Int? = null,
 ) : Comparable<Version> {
 
     private val comparator: Comparator<Version> =
@@ -38,6 +46,8 @@ class Version(
             .thenBy { it.fix1 ?: 0 }
             .thenBy { it.fix2 ?: 0 }
             .thenBy { it.fix3 ?: 0 }
+            .thenBy { it.phase }
+            .thenBy { it.iteration ?: 0 }
 
     override fun compareTo(other: Version): Int =
         comparator.compare(this, other)

@@ -83,6 +83,10 @@ class VersionChecker(
                 val atMostVersion = extension.findAtMostVersion(dependency)
                 atMostVersion == null || it <= atMostVersion
             }
+            .filter {
+                val phase = extension.getPhase(dependency)
+                it.phase >= phase
+            }
     }
 
 }

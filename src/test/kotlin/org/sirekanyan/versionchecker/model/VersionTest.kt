@@ -5,6 +5,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
+import org.sirekanyan.versionchecker.model.Phase.ALPHA
+import org.sirekanyan.versionchecker.model.Phase.BETA
 
 @RunWith(Parameterized::class)
 class VersionTest(private val input: String, private val output: Version?) {
@@ -36,6 +38,13 @@ class VersionTest(private val input: String, private val output: Version?) {
                 arrayOf("1.2.3-4", Version("", 1, 2, 3, 4)),
                 arrayOf("1.2.3-4.5", null),
                 arrayOf("1.2.3-4.5.6", Version("", 1, 2, 3, 4, 5, 6)),
+                arrayOf("1.2.3-alpha", Version("", 1, 2, 3, 0, 0, 0, ALPHA, 0)),
+                arrayOf("1.2.3.beta", Version("", 1, 2, 3, 0, 0, 0, BETA, 0)),
+                arrayOf("1.2.3-4-rc", null),
+                arrayOf("1.2.3-alpha4", Version("", 1, 2, 3, 0, 0, 0, ALPHA, 4)),
+                arrayOf("1.2.3.beta-04", Version("", 1, 2, 3, 0, 0, 0, BETA, 4)),
+                arrayOf("1.2.3-4.5-rc6", null),
+                arrayOf("1.2.3-4.5.6-rc07", null),
             )
     }
 }
