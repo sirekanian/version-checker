@@ -8,7 +8,7 @@ enum class Phase(private val key: String?) {
     RELEASE(null);
 
     companion object {
-        fun of(key: String): Phase? =
+        fun of(key: String?): Phase? =
             values().find { it.key.equals(key, ignoreCase = true) }
     }
 }

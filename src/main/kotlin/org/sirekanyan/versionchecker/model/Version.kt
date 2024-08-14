@@ -1,31 +1,26 @@
 package org.sirekanyan.versionchecker.model
 
-fun String.toVersion(): Version? {
-    fun Regex.groupValues() = matchEntire(this@toVersion)?.groupValues
-    fun List<String>.getInt(index: Int) = this[index].toInt()
-    Regex("^(\\d+)$").groupValues()?.let {
-        return Version(this, it.getInt(1))
-    }
-    Regex("^(\\d+)\\.(\\d+)$").groupValues()?.let {
-        return Version(this, it.getInt(1), it.getInt(2))
-    }
-    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)$").groupValues()?.let {
-        return Version(this, it.getInt(1), it.getInt(2), it.getInt(3))
-    }
-    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)-(\\d+)$").groupValues()?.let {
-        return Version(this, it.getInt(1), it.getInt(2), it.getInt(3), it.getInt(4))
-    }
-    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)-(\\d+)\\.(\\d+)\\.(\\d+)$").groupValues()?.let {
-        return Version(this, it.getInt(1), it.getInt(2), it.getInt(3), it.getInt(4), it.getInt(5), it.getInt(6))
-    }
-    Regex("^(\\d+)\\.(\\d+)\\.(\\d+)[-.]([A-Za-z]+)-?(\\d+)?$").groupValues()?.let {
-        Phase.of(it[4])?.let { phase ->
-            val iteration = it[5].ifEmpty { "0" }.toInt()
-            return Version(this, it.getInt(1), it.getInt(2), it.getInt(3), phase = phase, iteration = iteration)
+import org.sirekanyan.versionchecker.extensions.intValue
+
+private val VersionRegex: Regex =
+    Regex("""^(\d+)(\.(\d+))?(\.(\d+))?(-(\d+))?(\.(\d+))?(\.(\d+))?([-.]([A-Za-z]+)(-?(\d+))?)?$""")
+
+fun String.toVersion(): Version? =
+    VersionRegex.matchEntire(this)?.groups?.let { groups ->
+        Phase.of(groups[13]?.value)?.let { phase ->
+            Version(
+                rawValue = this,
+                major = groups[1].intValue,
+                minor = groups[3].intValue,
+                patch = groups[5].intValue,
+                fix1 = groups[7].intValue,
+                fix2 = groups[9].intValue,
+                fix3 = groups[11].intValue,
+                phase = phase,
+                iteration = groups[15].intValue,
+            )
         }
     }
-    return null
-}
 
 class Version(
     private val rawValue: String,
