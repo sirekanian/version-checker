@@ -20,6 +20,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.12")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.17.2")
+    testImplementation("junit:junit:4.13.2")
 }
 
 /// versionCheckerOptions {
