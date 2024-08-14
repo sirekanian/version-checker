@@ -25,24 +25,24 @@ fun String.toVersion(): Version? =
 class Version(
     private val rawValue: String,
     private val major: Int,
-    private val minor: Int? = null,
-    private val patch: Int? = null,
-    private val fix1: Int? = null,
-    private val fix2: Int? = null,
-    private val fix3: Int? = null,
+    private val minor: Int = 0,
+    private val patch: Int = 0,
+    private val fix1: Int = 0,
+    private val fix2: Int = 0,
+    private val fix3: Int = 0,
     val phase: Phase = Phase.RELEASE,
-    private val iteration: Int? = null,
+    private val iteration: Int = 0,
 ) : Comparable<Version> {
 
     private val comparator: Comparator<Version> =
         compareBy<Version> { it.major }
-            .thenBy { it.minor ?: 0 }
-            .thenBy { it.patch ?: 0 }
-            .thenBy { it.fix1 ?: 0 }
-            .thenBy { it.fix2 ?: 0 }
-            .thenBy { it.fix3 ?: 0 }
+            .thenBy { it.minor }
+            .thenBy { it.patch }
+            .thenBy { it.fix1 }
+            .thenBy { it.fix2 }
+            .thenBy { it.fix3 }
             .thenBy { it.phase }
-            .thenBy { it.iteration ?: 0 }
+            .thenBy { it.iteration }
 
     override fun compareTo(other: Version): Int =
         comparator.compare(this, other)
@@ -53,5 +53,4 @@ class Version(
     companion object {
         val ZERO = Version("0.0.0", 0)
     }
-
 }
