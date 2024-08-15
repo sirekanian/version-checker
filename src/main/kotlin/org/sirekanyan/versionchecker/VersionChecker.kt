@@ -1,5 +1,3 @@
-@file:Suppress("DefaultLocale")
-
 package org.sirekanyan.versionchecker
 
 import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES

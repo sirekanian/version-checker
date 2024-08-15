@@ -30,9 +30,7 @@ dependencies {
 /// }
 
 gradlePlugin {
-    @Suppress("UnstableApiUsage")
     website.set("https://sirekanyan.org/projects/version-checker")
-    @Suppress("UnstableApiUsage")
     vcsUrl.set("https://github.com/sirekanian/version-checker")
     plugins {
         create("versionCheckerPlugin") {
