@@ -47,6 +47,16 @@ class Version(
     override fun compareTo(other: Version): Int =
         comparator.compare(this, other)
 
+    override fun equals(other: Any?): Boolean =
+        when {
+            this === other -> true
+            javaClass != other?.javaClass -> false
+            else -> rawValue == (other as Version).rawValue
+        }
+
+    override fun hashCode(): Int =
+        rawValue.hashCode()
+
     override fun toString(): String =
         rawValue
 
