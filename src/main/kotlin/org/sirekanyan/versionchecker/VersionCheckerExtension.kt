@@ -4,9 +4,11 @@ import org.gradle.api.artifacts.Dependency
 import org.sirekanyan.versionchecker.model.Phase
 import org.sirekanyan.versionchecker.model.Version
 import org.sirekanyan.versionchecker.model.toVersion
+import java.io.File
 
 open class VersionCheckerExtension {
 
+    var output: File? = null
     val ALPHA = Phase.ALPHA
     val BETA = Phase.BETA
     val RC = Phase.RC

@@ -12,10 +12,12 @@ import org.sirekanyan.versionchecker.extensions.getSettingsRepositories
 import org.sirekanyan.versionchecker.gradlechecker.GradleVersionChecker
 import org.sirekanyan.versionchecker.model.Version
 import org.sirekanyan.versionchecker.model.toVersion
+import java.io.PrintStream
 
 class VersionCheckerPlugin : Plugin<Project> {
 
     private lateinit var extension: VersionCheckerExtension
+    private val output by lazy { extension.output?.let(::PrintStream) ?: System.out }
 
     override fun apply(project: Project) {
         extension = project.extensions.create("versionCheckerOptions")
@@ -52,7 +54,7 @@ class VersionCheckerPlugin : Plugin<Project> {
         val current = project.gradle.gradleVersion
         val (max, sum) = checker.getMaxVersion()
         if (current != max) {
-            println(
+            output.println(
                 "gradle wrapper $current => $max, use the following command to upgrade:\n"
                     .plus("./gradlew wrapper --gradle-version $max --distribution-type bin")
                     .plus(" --gradle-distribution-sha256-sum $sum")
@@ -64,7 +66,7 @@ class VersionCheckerPlugin : Plugin<Project> {
         val checker = ComposeVersionChecker()
         val max = checker.getMaxVersion()
         if (current != max) {
-            println("jetpack compose compiler $current => $max")
+            output.println("jetpack compose compiler $current => $max")
         }
     }
 
@@ -81,7 +83,7 @@ class VersionCheckerPlugin : Plugin<Project> {
             val max = checker.getMaxVersion(dependency).toString()
             if (current != max) {
                 val gav = dependency.run { "$group:${name.removePrefix("$group.")}:$version" }
-                println("$gav => $max")
+                output.println("$gav => $max")
             }
         }
     }
