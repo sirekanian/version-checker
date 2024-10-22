@@ -15,7 +15,7 @@ data class Metadata(
             .mapNotNull { it?.toVersion() }
 
     data class Versioning(
-        val latest: String,
+        val latest: String?,
         val release: String?,
         val versions: List<String>,
         val lastUpdated: String,
