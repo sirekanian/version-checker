@@ -47,14 +47,12 @@ class VersionChecker(
         async(Dispatchers.IO) {
             if (key.url.startsWith("file:/")) {
                 val path = key.url.replace(Regex("^file:/+"), "/")
-                val file = File(path)
-                if (file.exists()) {
-                    file.readText()
-                } else {
-                    null
-                }
+                listOf("maven-metadata-local.xml", "maven-metadata.xml")
+                    .map { File("$path/$it") }
+                    .find(File::exists)
+                    ?.readText()
             } else {
-                val response = httpClient.get(key.url)
+                val response = httpClient.get("${key.url}/maven-metadata.xml")
                 if (response.status == HttpStatusCode.NotFound) {
                     null
                 } else {
