@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     `kotlin-dsl`
     kotlin("plugin.serialization") version embeddedKotlinVersion
-    id("com.gradle.plugin-publish") version "1.3.0"
+    id("com.gradle.plugin-publish") version "1.3.1"
     /// id("org.sirekanyan.version-checker")
 }
 
@@ -16,12 +16,12 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
-    implementation("io.ktor:ktor-client-cio:3.0.2")
-    implementation("io.ktor:ktor-client-content-negotiation:3.0.2")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.2")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    implementation("io.ktor:ktor-client-cio:3.2.0")
+    implementation("io.ktor:ktor-client-content-negotiation:3.2.0")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.2.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.19.1")
     testImplementation("junit:junit:4.13.2")
 }
 
