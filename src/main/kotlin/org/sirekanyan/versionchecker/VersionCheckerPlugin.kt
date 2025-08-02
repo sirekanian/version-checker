@@ -4,6 +4,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.FileCollectionDependency
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.kotlin.dsl.create
 import org.sirekanyan.versionchecker.composechecker.ComposeVersionChecker
@@ -21,7 +22,7 @@ class VersionCheckerPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         extension = project.extensions.create("versionCheckerOptions")
-        project.task("versionChecker") {
+        project.tasks.register("versionChecker") {
             doLast {
                 executeVersionChecker(
                     project.rootProject.buildscript.repositories,
@@ -88,8 +89,7 @@ class VersionCheckerPlugin : Plugin<Project> {
         }
     }
 
-    @Suppress("Deprecation")
     private fun ConfigurationContainer.getDependencies(name: String): List<Dependency> =
-        findByName(name)?.allDependencies?.filter { it !is org.gradle.api.artifacts.SelfResolvingDependency }.orEmpty()
+        findByName(name)?.allDependencies?.filter { it !is FileCollectionDependency }.orEmpty()
 
 }

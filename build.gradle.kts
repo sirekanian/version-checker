@@ -17,11 +17,11 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-    implementation("io.ktor:ktor-client-cio:3.2.0")
-    implementation("io.ktor:ktor-client-content-negotiation:3.2.0")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:3.2.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.1")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.19.1")
+    implementation("io.ktor:ktor-client-cio:3.2.3")
+    implementation("io.ktor:ktor-client-content-negotiation:3.2.3")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.2.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.19.2")
     testImplementation("junit:junit:4.13.2")
 }
 
